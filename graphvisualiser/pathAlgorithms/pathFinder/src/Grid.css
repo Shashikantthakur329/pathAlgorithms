@@ -1,0 +1,25 @@
+.graph {
+    display: grid;
+    grid-template-columns: 20% 20% 20%;
+    grid-template-rows: 20% 20% 20%;
+    row-gap: 20px;
+    column-gap: 10px;
+}
+
+.nodes {
+    /* row-gap: 15px; */
+    /* column-gap: 10px; */
+    background-color: rgb(83, 209, 51);
+    color: brown;
+    height: 2rem;
+}
+
+.centered-div {
+    /* .centered-div { */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        /* Optional: Set a specific height for the centered div */
+    /* } */
+}
