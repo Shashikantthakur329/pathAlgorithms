@@ -4,7 +4,7 @@ var a = 10
 import './Grid.css'
 import { Button } from "@mui/material";
 function Grid() {
-    var [grid, UpdateGrid] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15,16]);
+    var [grid, UpdateGrid] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
     const [height, setViewportWidth] = useState(Math.min(0.8 * window.innerHeight, 0.8 * window.innerWidth));
     const [gridRows, setGridRows] = useState(Math.sqrt(grid.length)); // Initial grid-template-rows value
     // const [nodeHeight, setNodeHeight] = useState(height / NumElements)
@@ -12,18 +12,29 @@ function Grid() {
     const updateWidth = () => {
         setViewportWidth(Math.min(0.8 * window.innerHeight, 0.8 * window.innerWidth));
     };
-    
+
     const updateGrid = () => {
-        const tempGrid = [...grid]
         var num = Math.floor(Math.random() * 10) + 6;
         const tempArr = []
-        for(var i = 1; i <= num * num; i++){
-            tempArr.push(i);
+        for (var i = 1; i <= num * num; i++) {
+            tempArr.push(0);
         }
-        UpdateGrid(tempArr);
+        for(var i = Math.floor((num * 3) / 2); i < num * (num - 1); i+=num)
+        {
+            // console.log(i)
+            tempArr[i] = 1;
+        }
+        
+        var tt = Math.floor((num * (num / 2))) + 1;
+        for(var i = 0; i < num - 3 ; i+=1)
+        {
+            // console.log(i)
+            tempArr[i + tt] = 1;
+        }
+        
         setGridRows(num);
+        UpdateGrid(tempArr);
         console.log(num);
-        // updateGridRows()
     }
 
     const updateGridRows = () => {
@@ -34,8 +45,8 @@ function Grid() {
 
     var NumElements = Math.sqrt(grid.length);
     const width = height;
-    var graphHeight = Math.min(height * 0.8 , width * 0.8);
-    
+    var graphHeight = Math.min(height * 0.8, width * 0.8);
+
     var frameCss = {
         height: graphHeight,
         width: graphHeight,
@@ -44,16 +55,23 @@ function Grid() {
 
     var graphCss = {
         display: "grid",
-        gridTemplateRows:`repeat(${gridRows}, 1fr)`,
-        gridTemplateColumns:`repeat(${gridRows}, 1fr)`,
-        rowGap:"10px",
-        columnGap:"10px",
-        height:"100%",
-        justifyContent:"space-between",
+        gridTemplateRows: `repeat(${gridRows}, 1fr)`,
+        gridTemplateColumns: `repeat(${gridRows}, 1fr)`,
+        rowGap: "4px",
+        columnGap: "4px",
+        height: "100%",
+        justifyContent: "space-between",
     };
 
-    var nodeCss = {
-        backgroundColor:"yellow"
+    var WnodeCss = {
+        backgroundColor: "#53d133"
+        // height:nodeHeight,
+        // width:nodeHeight,
+        // backgroundColor:"yellow",
+    }
+
+    var BnodeCss = {
+        backgroundColor: "red",
         // height:nodeHeight,
         // width:nodeHeight,
         // backgroundColor:"yellow",
@@ -68,17 +86,23 @@ function Grid() {
         return () => {
             window.removeEventListener('resize', updateWidth);
         };
-    }, []); 
+    }, []);
 
     return (
         <>
             <div className="centered-div">
                 <div className="frame" style={frameCss}>
                     <div className="graph" style={graphCss}>
-                        {grid.map((item, index) => (
-                            <div key={index} className="nodes" style={nodeCss}>{item}</div>
-                        ))}
-
+                        {grid.map((item, index) => {
+                            if (item == '1') {
+                                // console.log(index, key);
+                                return (<div key={index} className="nodes" style={BnodeCss}>{item}</div>);
+                            }
+                            else
+                            {
+                                return (<div key={index} className="nodes" style={WnodeCss}>{item}</div>);
+                            }
+                        })}
                     </div>
                 </div>
                 <br />
