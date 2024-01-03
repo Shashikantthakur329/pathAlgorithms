@@ -1,40 +1,44 @@
 // import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 var a = 10
 import './Grid.css'
 import { Button } from "@mui/material";
+import findPath from './algorithms/Dfs';
+import Dfs from './algorithms/Dfs'
 function Grid() {
-    var [grid, UpdateGrid] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
+    var [grid, UpdateGrid] = useState([2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 3]);
     const [height, setViewportWidth] = useState(Math.min(0.8 * window.innerHeight, 0.8 * window.innerWidth));
     const [gridRows, setGridRows] = useState(Math.sqrt(grid.length)); // Initial grid-template-rows value
     // const [nodeHeight, setNodeHeight] = useState(height / NumElements)
+    const [startNode, setStartNode] = useState(0);
+    const [endNode, setEndNode] = useState(15);
 
     const updateWidth = () => {
         setViewportWidth(Math.min(0.8 * window.innerHeight, 0.8 * window.innerWidth));
     };
-
+    const graphContextProvider = ({})
     const updateGrid = () => {
         var num = Math.floor(Math.random() * 10) + 6;
         const tempArr = []
         for (var i = 1; i <= num * num; i++) {
             tempArr.push(0);
         }
-        for(var i = Math.floor((num * 3) / 2); i < num * (num - 1); i+=num)
-        {
-            // console.log(i)
+        for (var i = Math.floor((num * 3) / 2); i < num * (num - 1); i += num) {
             tempArr[i] = 1;
         }
-        
+
         var tt = Math.floor((num * (num / 2))) + 1;
-        for(var i = 0; i < num - 3 ; i+=1)
-        {
-            // console.log(i)
+        for (var i = 0; i < num - 3; i += 1) {
             tempArr[i + tt] = 1;
         }
-        
+        setEndNode(num * num);
         setGridRows(num);
+        tempArr[startNode] = 2;
+        tempArr[tempArr.length - 1] = 3;
+
         UpdateGrid(tempArr);
         console.log(num);
+        // console.log(endNode);
     }
 
     const updateGridRows = () => {
@@ -65,24 +69,23 @@ function Grid() {
 
     var WnodeCss = {
         backgroundColor: "#53d133"
-        // height:nodeHeight,
-        // width:nodeHeight,
-        // backgroundColor:"yellow",
     }
 
     var BnodeCss = {
         backgroundColor: "red",
-        // height:nodeHeight,
-        // width:nodeHeight,
-        // backgroundColor:"yellow",
     }
-    useEffect(() => {
-        // Attach the event listener on component mount
-        window.addEventListener('resize', updateWidth);
-        // updateGridRows
-        // window.addEventListener('resize', updateGridRows);
 
-        // Detach the event listener on component unmount
+    var SnodeCss = {
+        backgroundColor: "yellow",
+    }
+    var EnodeCss = {
+        backgroundColor: "yellow",
+    }
+
+
+    useEffect(() => {
+        window.addEventListener('resize', updateWidth);
+ 
         return () => {
             window.removeEventListener('resize', updateWidth);
         };
@@ -92,21 +95,32 @@ function Grid() {
         <>
             <div className="centered-div">
                 <div className="frame" style={frameCss}>
+                    <>
+                        <Dfs graph={grid} setGraph={UpdateGrid} ></Dfs>
+                    </>
                     <div className="graph" style={graphCss}>
                         {grid.map((item, index) => {
                             if (item == '1') {
                                 // console.log(index, key);
                                 return (<div key={index} className="nodes" style={BnodeCss}>{item}</div>);
                             }
-                            else
-                            {
+                            else if (item == '0') {
                                 return (<div key={index} className="nodes" style={WnodeCss}>{item}</div>);
+                            }
+                            else if (item == '2') {
+                                return (<div key={index} className="nodes" style={SnodeCss}>{item}</div>);
+                            }
+                            else if (item == '3') {
+                                return (<div key={index} className="nodes" style={EnodeCss}>{item}</div>);
                             }
                         })}
                     </div>
                 </div>
                 <br />
                 <Button variant="contained" onClick={updateGrid} className='btn'>New Graph</Button>
+            </div>
+            <div className="buttonClass">
+                <Button variant="contained" onClick={findPath} className='btRun'>Find Path</Button>
             </div>
         </>
     )
