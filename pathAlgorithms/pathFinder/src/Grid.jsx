@@ -76,12 +76,14 @@ function Grid() {
     }
 
     var SnodeCss = {
-        backgroundColor: "yellow",
+        backgroundColor: "blue",
     }
     var EnodeCss = {
-        backgroundColor: "yellow",
+        backgroundColor: "magenta",
     }
-
+    var VnodeCss = {
+        backgroundColor: "orange",
+    }
 
     useEffect(() => {
         window.addEventListener('resize', updateWidth);
@@ -95,23 +97,25 @@ function Grid() {
         <>
             <div className="centered-div">
                 <div className="frame" style={frameCss}>
-                    <>
-                        <Dfs graph={grid} setGraph={UpdateGrid} ></Dfs>
-                    </>
+                    {/* <>
+                    </> */}
                     <div className="graph" style={graphCss}>
                         {grid.map((item, index) => {
                             if (item == '1') {
                                 // console.log(index, key);
-                                return (<div key={index} className="nodes" style={BnodeCss}>{item}</div>);
+                                return (<div key={index} className="nodes" style={BnodeCss}></div>);
                             }
                             else if (item == '0') {
-                                return (<div key={index} className="nodes" style={WnodeCss}>{item}</div>);
+                                return (<div key={index} className="nodes" style={WnodeCss}></div>);
                             }
                             else if (item == '2') {
-                                return (<div key={index} className="nodes" style={SnodeCss}>{item}</div>);
+                                return (<div key={index} className="nodes" style={SnodeCss}></div>);
                             }
                             else if (item == '3') {
-                                return (<div key={index} className="nodes" style={EnodeCss}>{item}</div>);
+                                return (<div key={index} className="nodes" style={EnodeCss}></div>);
+                            }
+                            else if (item == '4') {
+                                return (<div key={index} className="nodes" style={VnodeCss}></div>);
                             }
                         })}
                     </div>
@@ -120,7 +124,7 @@ function Grid() {
                 <Button variant="contained" onClick={updateGrid} className='btn'>New Graph</Button>
             </div>
             <div className="buttonClass">
-                <Button variant="contained" onClick={findPath} className='btRun'>Find Path</Button>
+                <Button variant="contained" onClick={Dfs.bind(null, grid, UpdateGrid)} className='btRun'>Find Path</Button>
             </div>
         </>
     )
