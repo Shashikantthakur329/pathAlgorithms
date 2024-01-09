@@ -4,7 +4,8 @@ var a = 10
 import './Grid.css'
 import { Button } from "@mui/material";
 import findPath from './algorithms/Dfs';
-import Dfs from './algorithms/Dfs'
+import Dfs from './algorithms/Dfs';
+import Bfs from './algorithms/Bfs';
 function Grid() {
     var [grid, UpdateGrid] = useState([2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 3]);
     const [height, setViewportWidth] = useState(Math.min(0.8 * window.innerHeight, 0.8 * window.innerWidth));
@@ -16,9 +17,9 @@ function Grid() {
     const updateWidth = () => {
         setViewportWidth(Math.min(0.8 * window.innerHeight, 0.8 * window.innerWidth));
     };
-    const graphContextProvider = ({})
+    // const graphContextProvider = ({})
     const updateGrid = () => {
-        var num = Math.floor(Math.random() * 10) + 6;
+        var num = Math.floor(Math.random() * 10) + 26;
         const tempArr = []
         for (var i = 1; i <= num * num; i++) {
             tempArr.push(0);
@@ -124,7 +125,8 @@ function Grid() {
                 <Button variant="contained" onClick={updateGrid} className='btn'>New Graph</Button>
             </div>
             <div className="buttonClass">
-                <Button variant="contained" onClick={Dfs.bind(null, grid, UpdateGrid)} className='btRun'>Find Path</Button>
+                <Button variant="contained" onClick={Dfs.bind(null, grid, UpdateGrid)} className='btRun'>Dfs</Button>
+                <Button variant="contained" onClick={Bfs.bind(null, grid, UpdateGrid)} className='btRun'>Bfs</Button>
             </div>
         </>
     )

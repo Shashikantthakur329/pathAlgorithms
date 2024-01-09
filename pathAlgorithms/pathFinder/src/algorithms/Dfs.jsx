@@ -1,10 +1,5 @@
 import React, {useState, useEffect } from "react";
 
-// function Sleep(ms) {
-//     return new Promise((resolve) =>
-//         setTimeout(() => { resolve }, ms)
-//     )
-// }
 function Sleep(ms)
 {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -15,8 +10,9 @@ function getElem(grid, x, y){
     return grid[x * n + y]
 }
 let stop = 0;
-var dirn = [[1,0],[0,1]]
+var dirn = [[1,0],[0,1], [-1, 0], [0, -1]]
 let vis = []
+
 async function dfs(grid, UpdateGrid,n, x, y)
 {
     if(x >= n || y >= n)
@@ -27,8 +23,8 @@ async function dfs(grid, UpdateGrid,n, x, y)
     // vis[x][y] = 1;
     grid[x * n + y] = 4;
     UpdateGrid([...grid])
-    await Sleep(200);
-    for(let i = 0; i < 2; i++)
+    await Sleep(100);
+    for(let i = 0; i < dirn.length; i++)
     {
         var dx = dirn[i][0];
         var dy = dirn[i][1];
