@@ -20,7 +20,6 @@ async function dfs(grid, UpdateGrid,n, x, y)
         return false;
     }
     if (getElem(grid,nx,ny) == 3) return true;
-    // vis[x][y] = 1;
     grid[x * n + y] = 4;
     UpdateGrid([...grid])
     await Sleep(100);

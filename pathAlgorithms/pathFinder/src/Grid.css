@@ -21,7 +21,13 @@
     /* height: 2rem; */
     /* width: 2rem; */
 }
-
+.dragBtns{
+    position:fixed;
+    left:50px;
+    display:grid;
+    grid-template-rows: 1;
+    /* grid-template-rows: 1; */
+}
 .centered-div {
     /* .centered-div { */
     display: flex;
@@ -30,13 +36,24 @@
     height: 90vh;
     /* } */
 }
-
-.buttonClass{
-    display: flex;
+.menu{
+    width:100%;
+    padding-top:4vh;
+    margin-bottom: -5vh;
+    /* display: grid;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
+    
 }
 
 .btnRun{
-    align-self: center;
+    align-items: start; 
+    /* align-self:flex-start;  */
+    /* width: 100%; */
+}
+
+.buttonClass{
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
 }

@@ -50,28 +50,50 @@ function getElem(grid, x, y) {
 let stop = 0;
 var dirn = [[1, 0], [0, 1], [-1, 0], [0, -1]]
 let vis = []
-
+let par = []
+par[0] = 0
 async function bfs(grid, UpdateGrid, n, x, y) {
     const q = []
-    q.push({x,y});
+    q.push({ x, y });
 
     while (q.length > 0) {
         let len = q.length;
         while (len-- > 0) {
             var cord = q.shift();
             var x = cord.x, y = cord.y;
-            if (x >= 0 && y >= 0 && x < n && y < n && getElem(grid, x, y) == 3) {
-                grid[x * n + y] = 4;
-                UpdateGrid([...grid]);
-                return true;
-            }
+            // if (x >= 0 && y >= 0 && x < n && y < n && getElem(grid, x, y) == 3) {
+            //     grid[x * n + y] = 4;
+            //     UpdateGrid([...grid]);
+            //     while(q.length > 0)
+            //     {
+            //         q.pop();
+            //     }
+            //     console.log("detected");
+            //     return true;
+            // }
             grid[x * n + y] = 4;
             for (var i = 0; i < dirn.length; i++) {
                 var nx = cord.x + dirn[i][0];
                 var ny = cord.y + dirn[i][1];
+                if (nx >= 0 && ny >= 0 && nx < n && ny < n && getElem(grid, nx, ny) == 3) {
+                    // grid[nx * n + ny] = 3;
+                    var chld = x*n+y;
+                    let tgrid = [...grid]
+                    tgrid[chld] = 5;
+                    tgrid[nx*n + ny ]= 5;
+                    while(par[chld] != chld)
+                    {
+                        tgrid[par[chld]] = 5;
+                        chld = par[chld];
+                    }
+                    UpdateGrid([...tgrid]);
+                    return true;
+                }
                 if (nx >= 0 && ny >= 0 && nx < n && ny < n && getElem(grid, nx, ny) != 1 && getElem(grid, nx, ny) != 4) {
-                    grid[nx * n + y] = 4;
-                    q.push(...[{ x: nx, y: ny }]);
+                    
+                    grid[nx * n + ny] = 4;
+                    par[nx * n + ny] = x*n+y;
+                    q.push({ x: nx, y: ny });
                 }
             }
         }
