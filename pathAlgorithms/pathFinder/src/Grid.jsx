@@ -47,6 +47,9 @@ function Grid() {
         columnGap: "4px",
         height: "100%",
         justifyContent: "space-between",
+        border: "black 4px solid",
+        boxShadow:"",
+        
     };
 
     var WnodeCss = {
