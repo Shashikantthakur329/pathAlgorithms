@@ -20,6 +20,8 @@
     /* color: brown; */
     /* height: 2rem; */
     /* width: 2rem; */
+    border:1px solid rgb(188, 255, 255);
+    /* border:1px solid #7b67d6; */
 }
 .dragBtns{
     position:fixed;

@@ -35,7 +35,6 @@ function Grid() {
         display: "grid",
         justifyContent: "space-evenly",
         gridTemplateColumns: `repeat(4, 1fr)`,
-        // repeat(auto-fit, minmax(250px, 1fr));
         columnGap: "20px",
     }
 
@@ -43,8 +42,8 @@ function Grid() {
         display: "grid",
         gridTemplateRows: `repeat(${gridRows}, 1fr)`,
         gridTemplateColumns: `repeat(${gridRows}, 1fr)`,
-        rowGap: "4px",
-        columnGap: "4px",
+        // rowGap: "4px",
+        // columnGap: "4px",
         height: "100%",
         justifyContent: "space-between",
         border: "black 4px solid",
@@ -53,11 +52,12 @@ function Grid() {
     };
 
     var WnodeCss = {
+        // backgroundColor: "#53d133",
         backgroundColor: "#53d133"
     }
 
     var BnodeCss = {
-        backgroundColor: "red",
+        backgroundColor: "#c73038",
     }
 
     var SnodeCss = {
@@ -70,11 +70,11 @@ function Grid() {
         backgroundColor: "orange",
     }
     var PnodeCss = {
-        backgroundColor: "black",
+        backgroundColor: "#7b67d6",
     }
 
     const updateGrid = (gridLength) => {
-        var num = Math.floor(Math.random() * 10) + 6;
+        var num = Math.floor(Math.random() * 10) + 26;
         const tempArr = []
         for (var i = 1; i <= num * num; i++) {
             tempArr.push(0);
@@ -137,7 +137,6 @@ function Grid() {
         // }
         if (currentlyDragging != null) {
             let tempVar = 0;
-            // console.log("xxxx");
             if (currentlyDragging == -1) {
                 tempVar = 0;
                 console.log("000");
