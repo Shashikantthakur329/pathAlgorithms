@@ -2,7 +2,7 @@
   "name": "pathfinder",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://github.com/Shashikantthakur329/pathAlgorithms.git/pathAlgorithms/pathfinder",
+  "homepage": "https://github.com/Shashikantthakur329/pathAlgorithms.git/",
   "type": "module",
   "scripts": {
     "dev": "vite",
