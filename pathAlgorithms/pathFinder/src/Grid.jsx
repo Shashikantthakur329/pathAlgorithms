@@ -36,7 +36,8 @@ function Grid() {
         justifyContent: "space-evenly",
         gridTemplateColumns: `repeat(4, 1fr)`,
         columnGap: "20px",
-    }
+        // width: graphHeight,
+    };
 
     var graphCss = {
         display: "grid",
@@ -46,13 +47,13 @@ function Grid() {
         // columnGap: "4px",
         height: "100%",
         justifyContent: "space-between",
-        border: "black 4px solid",
-        boxShadow:"",
-        
+        border: "black 3px solid",
+        boxShadow: "",
+        borderRadius: "4px",
+
     };
 
     var WnodeCss = {
-        // backgroundColor: "#53d133",
         backgroundColor: "#53d133"
     }
 
@@ -73,8 +74,21 @@ function Grid() {
         backgroundColor: "#7b67d6",
     }
 
+    const retCss = {
+        display: "grid",
+        placeItems: "center",
+        alignItems: "center",
+        rowGap: "15vh",
+        // height:"100vh",
+    }
+
+    const dragCss = {
+        height: graphHeight / 8,
+        width: graphHeight / 18,
+    };
+
     const updateGrid = (gridLength) => {
-        var num = Math.floor(Math.random() * 10) + 26;
+        var num = Math.floor(Math.random() * 10) + 30;
         const tempArr = []
         for (var i = 1; i <= num * num; i++) {
             tempArr.push(0);
@@ -94,11 +108,10 @@ function Grid() {
 
         UpdateGrid(tempArr);
         console.log(num);
-        // console.log(endNode);
     }
 
     const updateGridRows = () => {
-        setGridRows(Math.sqrt(grid.length) - 1); // You can change this to any desired value
+        setGridRows(Math.sqrt(grid.length) - 1);
         console.log(gridRows);
     };
 
@@ -110,56 +123,51 @@ function Grid() {
         else {
             setMode(0);
         }
-
-        console.log(mode);
+        // console.log(mode);
     }
 
     const [draggedOverElements, setDraggedOverElements] = useState([]);
-
-
     const [isDraggingOver, setIsDraggingOver] = useState(false);
     const [currentlyDragging, setCurrentlyDragging] = useState(null);
     const handleDragOver = (event) => {
-        event.preventDefault();
-        setIsDraggingOver(true);
-        event.preventDefault();
+        if (mode == 1) {
+            event.preventDefault();
+            setIsDraggingOver(true);
+            event.preventDefault();
 
-        const draggedElement = event.target;
-        const { clientX, clientY } = event;
-        const elements = document.elementsFromPoint(clientX, clientY);
+            const draggedElement = event.target;
+            const { clientX, clientY } = event;
+            const elements = document.elementsFromPoint(clientX, clientY);
 
-        var dragged_elements = elements.map((element) => element.id);
-        setDraggedOverElements(dragged_elements);
-        var temp = 1;
-        // if(currentlyDragging == 1)
-        // {
-
-        // }
-        if (currentlyDragging != null) {
-            let tempVar = 0;
-            if (currentlyDragging == -1) {
-                tempVar = 0;
-                console.log("000");
-            }
-            else if (currentlyDragging == -2) {
-                tempVar = 1;
-            }
-            else{
-                tempVar = grid[currentlyDragging];
-            }
-            for (var i = 0; i < dragged_elements.length; i++) {
-                if (dragged_elements[i] > 0 && dragged_elements[i] < grid.length) {
-                    var tempGrid = [...grid];
-                    tempGrid[dragged_elements[i]] = tempVar;
-                    console.log(tempGrid);
-                    UpdateGrid([...tempGrid]);
+            var dragged_elements = elements.map((element) => element.id);
+            setDraggedOverElements(dragged_elements);
+            // var temp = 1;
+            if (currentlyDragging != null) {
+                let tempVar = 0;
+                if (currentlyDragging == -1) {
+                    tempVar = 0;
+                    console.log("000");
+                }
+                else if (currentlyDragging == -2) {
+                    tempVar = 1;
+                }
+                else {
+                    tempVar = grid[currentlyDragging];
+                }
+                for (var i = 0; i < dragged_elements.length; i++) {
+                    if (dragged_elements[i] > 0 && dragged_elements[i] < grid.length) {
+                        var tempGrid = [...grid];
+                        tempGrid[dragged_elements[i]] = tempVar;
+                        console.log(tempGrid);
+                        UpdateGrid([...tempGrid]);
+                    }
                 }
             }
         }
     };
 
     const handleDragLeave = () => {
-        console.log("handleDragLeave!");
+        // console.log("handleDragLeave!");
         setIsDraggingOver(false);
     };
 
@@ -176,7 +184,7 @@ function Grid() {
 
     const handleDragEnd = (event) => {
         setCurrentlyDragging(null);
-        console.log("Dragging ended of ", event.target.id);
+        // console.log("Dragging ended of ", event.target.id);
     }
 
     useEffect(() => {
@@ -198,54 +206,57 @@ function Grid() {
         });
     };
 
+
     return (
         <>
-            <div className="menu" >
-                <div className="buttonClass" style={menuCss}>
-                    <Button variant="contained" onClick={updateGrid} className='menuBtn btRun'>New Graph</Button>
-                    <Button variant="contained" onClick={editWalls} className='menuBtn btRun'>Edit Walls</Button>
-                    <Button variant="contained" onClick={Dfs.bind(null, grid, UpdateGrid)} className='btRun'>Dfs</Button>
-                    <Button variant="contained" onClick={Bfs.bind(null, grid, UpdateGrid)} className='btRun'>Shortest Path</Button>
-                </div>
-            </div>
-            {/* <ToastContainer /> */}
-            <div className="centered-div">
-                {(mode == 1) ?
-                    <div className="dragBtns" >
-                        <div key={-2} id={-2} draggable onDragOver={handleDragOver} onDragStart={handleDragStart} onDragEnd={handleDragEnd} className="nodes" style={BnodeCss}>asd</div>
-                        <div key={-1} id={-1} draggable onDragOver={handleDragOver} onDragStart={handleDragStart} onDragEnd={handleDragEnd} className="nodes" style={WnodeCss}>sd</div>
-                    </div>
-                    :
-                    <div></div>
-                }
-
-                <div className="frame" style={frameCss}>
-                    <div className="graph" style={graphCss}>
-                        {grid.map((item, index) => {
-                            if (item == '1') {
-                                // console.log(index, key);
-                                // return (<div key={index} id={index} draggable onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onMouseMove={handleMouseMove} className="nodes" style={BnodeCss}></div>);
-                                return (<div key={index} id={index} draggable onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop} onDragStart={handleDragStart} onDragEnd={handleDragEnd} className="nodes" style={BnodeCss}></div>);
-                            }
-                            else if (item == '0') {
-                                return (<div key={index} id={index} draggable onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop} onDragStart={handleDragStart} onDragEnd={handleDragEnd} className="nodes" style={WnodeCss}></div>);
-                            }
-                            else if (item == '2') {
-                                return (<div key={index} id={index} className="nodes" style={SnodeCss}></div>);
-                            }
-                            else if (item == '3') {
-                                return (<div key={index} id={index} className="nodes" style={EnodeCss}></div>);
-                            }
-                            else if (item == '4') {
-                                return (<div key={index} id={index} className="nodes" style={VnodeCss}></div>);
-                            }
-                            else if (item == '5') {
-                                return (<div key={index} id={index} className="nodes" style={PnodeCss}></div>);
-                            }
-                        })}
+            <ToastContainer />
+            <div style={retCss}>
+                <div className="menu">
+                    <div className="buttonClass" style={menuCss}>
+                        <Button variant="contained" onClick={updateGrid} className='menuBtn btRun'>New Graph</Button>
+                        <Button variant="contained" onClick={editWalls} className='menuBtn btRun'>Edit Walls</Button>
+                        <Button variant="contained" onClick={Dfs.bind(null, grid, UpdateGrid)} className='btRun'>Dfs</Button>
+                        <Button variant="contained" onClick={Bfs.bind(null, grid, UpdateGrid)} className='btRun'>Shortest Path</Button>
                     </div>
                 </div>
+                <div className="centered-div">
+                    {(mode == 1) ?
+                        <div className="dragBtns" style={dragCss}>
+                            <div key={-2} id={-2} draggable onDragOver={handleDragOver} onDragStart={handleDragStart} onDragEnd={handleDragEnd} className="nodes dragBtn" style={BnodeCss}></div>
+                        
+                            <div key={-1} id={-1} draggable onDragOver={handleDragOver} onDragStart={handleDragStart} onDragEnd={handleDragEnd} className="nodes dragBtn" style={WnodeCss}></div>
+                        </div>
+                        :
+                        <div></div>
+                    }
 
+                    <div className="frame" style={frameCss}>
+                        <div className="graph" style={graphCss}>
+                            {grid.map((item, index) => {
+                                if (item == '1') {
+                                    // return (<div key={index} id={index} draggable onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onMouseMove={handleMouseMove} className="nodes" style={BnodeCss}></div>);
+                                    return (<div key={index} id={index} draggable onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop} onDragStart={handleDragStart} onDragEnd={handleDragEnd} className="nodes" style={BnodeCss}></div>);
+                                }
+                                else if (item == '0') {
+                                    return (<div key={index} id={index} draggable onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop} onDragStart={handleDragStart} onDragEnd={handleDragEnd} className="nodes" style={WnodeCss}></div>);
+                                }
+                                else if (item == '2') {
+                                    return (<div key={index} id={index} className="nodes" style={SnodeCss}></div>);
+                                }
+                                else if (item == '3') {
+                                    return (<div key={index} id={index} className="nodes" style={EnodeCss}></div>);
+                                }
+                                else if (item == '4') {
+                                    return (<div key={index} id={index} className="nodes" style={VnodeCss}></div>);
+                                }
+                                else if (item == '5') {
+                                    return (<div key={index} id={index} className="nodes" style={PnodeCss}></div>);
+                                }
+                            })}
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </>
     )

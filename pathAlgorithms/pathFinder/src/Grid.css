@@ -20,41 +20,52 @@
     /* color: brown; */
     /* height: 2rem; */
     /* width: 2rem; */
-    border:1px solid rgb(188, 255, 255);
+    border: 1px solid rgb(188, 255, 255);
+    
     /* border:1px solid #7b67d6; */
 }
-.dragBtns{
-    position:fixed;
-    left:50px;
-    display:grid;
-    grid-template-rows: 1;
-    /* grid-template-rows: 1; */
-}
+
+
+
 .centered-div {
-    /* .centered-div { */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90vh;
-    /* } */
+    position: relative;
 }
-.menu{
-    width:100%;
-    padding-top:4vh;
+
+.dragBtns {
+    position: fixed;
+    left: 50px;
+    display: grid;
+    grid-template-rows: 1;
+    position:absolute;
+    left:-8vw;
+    top:45%;
+    row-gap: 1vh;
+}
+
+.dragBtns div{
+    border-radius: 4px;
+}
+.dragBtns div:hover{
+    border-radius: 4px;
+}
+
+.menu {
+    width: 100%;
+    padding-top: 4vh;
     margin-bottom: -5vh;
+
     /* display: grid;
     justify-content: center;
     align-items: center; */
-    
 }
 
-.btnRun{
-    align-items: start; 
+.btnRun {
+    align-items: start;
     /* align-self:flex-start;  */
     /* width: 100%; */
 }
 
-.buttonClass{
+.buttonClass {
     /* display: flex; */
     /* justify-content: center; */
     /* align-items: center; */
