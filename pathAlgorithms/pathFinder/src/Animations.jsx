@@ -6,6 +6,7 @@ const BubbleAnimation = () => {
         <>
             <div className="wrapper">
                 <h1>Algorithm Visualiser</h1>
+                <h3>Click on bubbles!!!</h3>
                 <div className="bubble">
                     <span className="dot">
                         <span className="sbblBtn">
